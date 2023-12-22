@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:lab15.ViewModels"
+             x:Class="lab15.Views.AirbnbPage">
+    <ContentPage.BindingContext>
+        <vm:AirbnbViewModel/>
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="10">
+        <!-- Agrega un título para la página -->
+        <Label Text="Listado de Airbnb" FontSize="Large" HorizontalOptions="Center"/>
+
+        <!-- ListView para mostrar listados de Airbnb -->
+        <CollectionView ItemsSource="{Binding Listings}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" Margin="5" CornerRadius="10" BorderColor="#ccc">
+                        <StackLayout Orientation="Vertical">
+                            <!-- Imagen de la propiedad -->
+                            <Image Source="{Binding Image}" Aspect="AspectFill" HeightRequest="200"/>
+                            <!-- Nombre y ubicación -->
+                            <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                            <Label Text="{Binding Location}" Opacity="0.6"/>
+                            <!-- Descripción con un máximo de 2 líneas -->
+                            <Label Text="{Binding Description}" MaxLines="2" LineBreakMode="TailTruncation"/>
+                            <!-- Precio y fecha disponible -->
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                                <Label Text="{Binding PriceUsd, StringFormat='Precio: ${0} USD'}"/>
+                                <Label Text="{Binding Date, StringFormat='Disponible: {0:dd/MM/yyyy}'}"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botón para cargar o recargar los listados -->
+        <Frame Padding="0"
+       HasShadow="True"
+       CornerRadius="20"
+       BorderColor="#20B2AA"
+       BackgroundColor="#ff4500"
+       HorizontalOptions="Center"
+       VerticalOptions="Center"
+       Margin="10">
+            <Button Text="Cargar Listados"
+            Command="{Binding LoadListingsCommand}"
+            BackgroundColor="Transparent"
+            TextColor="White"
+            FontAttributes="Bold"
+            CornerRadius="20"
+            FontSize="Medium">
+            </Button>
+        </Frame>
+    </StackLayout>
+</ContentPage>
